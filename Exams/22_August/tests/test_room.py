@@ -54,5 +54,6 @@ class TestRooms(TestCaseBase):
         self.assertEqual(expected, self.room.expenses)
 
 
+
 if __name__ == '__main__':
     unittest.main()
