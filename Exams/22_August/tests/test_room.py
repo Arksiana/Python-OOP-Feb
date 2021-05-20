@@ -1,6 +1,5 @@
 import unittest
 
-from project.appliances.tv import TV
 from project.people.child import Child
 from project.rooms.room import Room
 
