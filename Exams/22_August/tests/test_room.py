@@ -23,6 +23,7 @@ class TestRooms(TestCaseBase):
         self.assertEqual(self.budget, self.room.budget)
         self.assertEqual(self.members_count, self.room.members_count)
         self.assertListEmpty(self.room.children)
+        self.assertEqual(0, self.room.expenses)
 
     def test_when_expenses_is_negative__expect_raise(self):
         with self.assertRaises(ValueError) as ex:
@@ -42,17 +43,16 @@ class TestRooms(TestCaseBase):
         self.assertEqual(0, self.room.expenses)
 
     def test_calculate_expenses_when_one_consumes_expect_expenses_to_be_correct(self):
-        consumers = [TV()]
+        consumers = [Child(1, 2, 3, 4)]
         self.room.calculate_expenses(consumers)
         self.assertEqual(consumers[0].get_monthly_expense(), self.room.expenses)
 
     def test_calculate_expenses_when_two_consumes_expect_expenses_to_be_correct(self):
-        appliances = [TV()]
-        children = [Child(5, 1 ,2, 3)]
+        appliances = [Child(1, 2, 3, 4)]
+        children = [Child(5, 1, 2, 3)]
         self.room.calculate_expenses(appliances, children)
         expected = appliances[0].get_monthly_expense() + children[0].get_monthly_expense()
         self.assertEqual(expected, self.room.expenses)
-
 
 
 if __name__ == '__main__':
