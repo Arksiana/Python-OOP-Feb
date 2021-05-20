@@ -1,5 +1,7 @@
 import unittest
 
+from project.appliances.tv import TV
+from project.people.child import Child
 from project.rooms.room import Room
 
 
@@ -36,10 +38,20 @@ class TestRooms(TestCaseBase):
         self.assertEqual(0, self.room.expenses)
 
     def test_calculate_expenses_when_zero_consumes_expect_expenses_to_be_0(self):
-        pass
+        self.room.calculate_expenses([])
+        self.assertEqual(0, self.room.expenses)
 
     def test_calculate_expenses_when_one_consumes_expect_expenses_to_be_correct(self):
-        pass
+        consumers = [TV()]
+        self.room.calculate_expenses(consumers)
+        self.assertEqual(consumers[0].get_monthly_expense(), self.room.expenses)
+
+    def test_calculate_expenses_when_two_consumes_expect_expenses_to_be_correct(self):
+        appliances = [TV()]
+        children = [Child(5, 1 ,2, 3)]
+        self.room.calculate_expenses(appliances, children)
+        expected = appliances[0].get_monthly_expense() + children[0].get_monthly_expense()
+        self.assertEqual(expected, self.room.expenses)
 
 
 if __name__ == '__main__':
